@@ -18,6 +18,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
         .container {
             max-width: 1200px;
@@ -82,43 +83,29 @@
             animation: blink-caret 0.75s step-end infinite;
         }
         .highlight-web, .highlight-inova {
-            transition: color 1s ease;
-        }
-        .highlight-web {
-            color: var(--text-color);
-        }
-        .highlight-inova {
-            color: var(--text-color);
+            transition: color 2s ease;
         }
         @keyframes blink-caret {
             from, to { border-color: transparent }
             50% { border-color: var(--text-color); }
         }
         .blob {
-            position: absolute;
+            position: fixed;
             border-radius: 50%;
             filter: blur(60px);
-            transition: all 2s ease;
-        }
-        .blob1, .loading-circle1 {
-            width: 8rem;
-            height: 8rem;
-            background-color: var(--accent-color);
-        }
-        .blob2, .loading-circle2 {
-            width: 5rem;
-            height: 5rem;
-            background-color: var(--secondary-color);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 2s ease, transform 0.5s ease;
         }
         .blob1 {
-            top: 40%;
-            left: 5%;
-            transform: translate(0, 0);
+            width: 400px;
+            height: 400px;
+            background-color: var(--accent-color);
         }
         .blob2 {
-            bottom: 40%;
-            right: 5%;
-            transform: translate(0, 0);
+            width: 300px;
+            height: 300px;
+            background-color: var(--secondary-color);
         }
         .cta-button {
             display: inline-block;
@@ -190,12 +177,18 @@
             animation: dance 1.5s infinite alternate;
         }
         .loading-circle1 {
+            width: 8rem;
+            height: 8rem;
+            background-color: var(--accent-color);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             animation-delay: 0s;
         }
         .loading-circle2 {
+            width: 5rem;
+            height: 5rem;
+            background-color: var(--secondary-color);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -207,14 +200,6 @@
             }
             to {
                 transform: scale(1.5) translate(-50%, -45%);
-            }
-        }
-        @-webkit-keyframes dance {
-            from {
-                -webkit-transform: scale(1) translate(-50%, -50%);
-            }
-            to {
-                -webkit-transform: scale(1.5) translate(-50%, -45%);
             }
         }
     </style>
@@ -277,12 +262,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const loadingScreen = document.querySelector('.loading-screen');
-            const loadingCircle1 = document.querySelector('.loading-circle1');
-            const loadingCircle2 = document.querySelector('.loading-circle2');
-            const blob1 = document.querySelector('.blob1');
-            const blob2 = document.querySelector('.blob2');
             const heroContent = document.querySelector('.hero-content');
             const textElement = document.getElementById('animated-text');
+            const blobs = document.querySelectorAll('.blob');
+            const navLinks = document.querySelectorAll('.nav-links a');
 
             const typeText = async (element, text, delay = 100) => {
                 for (let i = 0; i < text.length; i++) {
@@ -311,52 +294,59 @@
 
                 // Add color transition
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                document.querySelector('.highlight-web').style.color = 'var(--secondary-color)';
-                document.querySelector('.highlight-inova').style.color = 'var(--accent-color)';
+                textElement.innerHTML = fullText.replace('Web', '<span class="highlight-web">Web</span>').replace('Inova', '<span class="highlight-inova">Inova</span>');
+                
+                setTimeout(() => {
+                    document.querySelector('.highlight-web').style.color = 'var(--secondary-color)';
+                    document.querySelector('.highlight-inova').style.color = 'var(--accent-color)';
+                }, 100);
             };
 
             setTimeout(() => {
                 loadingScreen.style.opacity = '0';
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
-
-                    // Match loading circles to final blobs
-                    blob1.style.width = loadingCircle1.style.width;
-                    blob1.style.height = loadingCircle1.style.height;
-                    blob1.style.backgroundColor = loadingCircle1.style.backgroundColor;
-                    
-                    blob2.style.width = loadingCircle2.style.width;
-                    blob2.style.height = loadingCircle2.style.height;
-                    blob2.style.backgroundColor = loadingCircle2.style.backgroundColor;
-
-                    // Transition blobs to final positions and sizes
-                    blob1.style.width = '400px';
-                    blob1.style.height = '400px';
-                    blob1.style.top = '10%';
-                    blob1.style.left = '5%';
-                    blob1.style.transform = 'translate(0, 0)';
-
-                    blob2.style.width = '300px';
-                    blob2.style.height = '300px';
-                    blob2.style.bottom = '10%';
-                    blob2.style.right = '5%';
-                    blob2.style.transform = 'translate(0, 0)';
-
                     heroContent.style.opacity = '1';
                     heroContent.style.filter = 'blur(0)';
-
-                    // Start text animation
+                    blobs.forEach(blob => {
+                        blob.style.opacity = '0.7';
+                    });
                     animateText();
                 }, 500);
             }, 2000);
             
-            window.addEventListener('scroll', function() {
-                var scrolled = window.scrollY;
-                var parallaxElements = document.querySelectorAll('.parallax');
-                parallaxElements.forEach(function(el) {
-                    var speed = 0.5;
-                    el.style.backgroundPositionY = -(scrolled * speed) + 'px';
+            // Smooth scrolling for navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    const headerOffset = 80; // Adjust this value based on your header height
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
                 });
+            });
+
+            // Blob animation
+            let lastScrollTop = 0;
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const delta = scrolled - lastScrollTop;
+                const speed = 0.5;
+
+                blobs.forEach((blob, index) => {
+                    const direction = index % 2 === 0 ? 1 : -1;
+                    const translateY = scrolled * speed * direction;
+                    const rotate = scrolled * 0.1 * direction;
+                    blob.style.transform = `translateY(${translateY}px) rotate(${rotate}deg)`;
+                });
+
+                lastScrollTop = scrolled <= 0 ? 0 : scrolled;
             });
         });
     </script>
