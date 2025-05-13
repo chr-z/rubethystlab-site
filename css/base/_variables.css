@@ -1,0 +1,9 @@
+:root {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --accent-color: #d10056;
+    --secondary-color: #9966cc;
+    --accent-color-blob: #d100579e;
+    --secondary-color-blob: #9966cc85;
+    --font-primary: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}

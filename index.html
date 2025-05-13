@@ -4,224 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebInova - Design Web que Inova</title>
-    <style>
-        :root {
-            --bg-color: #000000;
-            --text-color: #ffffff;
-            --accent-color: #d10056; /* Ruby */
-            --secondary-color: #9966cc; /* Ametista */
-        }
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-        }
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            background: rgba(0, 0, 0, 0.5);
-        }
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-        .logo .web {
-            color: var(--secondary-color); /* Ametista */
-        }
-        .logo .inova {
-            color: var(--accent-color); /* Rubi */
-        }
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            margin-left: 20px;
-            transition: color 0.3s ease;
-        }
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-        .hero-content {
-            z-index: 2;
-            opacity: 0;
-            filter: blur(10px);
-            transition: opacity 2s ease, filter 2s ease;
-        }
-        .text {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: .15em solid var(--text-color);
-            display: inline-block;
-            animation: blink-caret 0.75s step-end infinite;
-        }
-        .highlight-web, .highlight-inova {
-            transition: color 2s ease;
-        }
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--text-color); }
-        }
-        .blob {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.7;
-            pointer-events: none;
-        }
-        .blob1 {
-            width: 400px;
-            height: 400px;
-            background-color: var(--accent-color);
-            top: 10%;
-            left: 5%;
-            animation: moveBlob1 10s infinite alternate;
-        }
-        .blob2 {
-            width: 300px;
-            height: 300px;
-            background-color: var(--secondary-color);
-            bottom: 10%;
-            right: 5%;
-            animation: moveBlob2 12s infinite alternate;
-        }
-        @keyframes moveBlob1 {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(100vw, 100vh); }
-        }
-        @keyframes moveBlob2 {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100vw, -100vh); }
-        }
-        .cta-button {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--text-color);
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-        .cta-button:hover {
-            background-color: var(--secondary-color);
-            transform: scale(1.05);
-            color: var(--text-color); /* Ensure text remains white on hover */
-        }
-        .services {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 50px;
-            text-align: center;
-        }
-        .service-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px;
-            transition: transform 0.3s ease;
-            flex-basis: calc(33% - 40px);
-        }
-        .service-card:hover {
-            transform: translateY(-10px);
-        }
-        footer {
-            text-align: center;
-            padding: 50px 0;
-            margin-top: 50px;
-        }
-        .parallax {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-        /* Loading Animation */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-        .loading-animation {
-            position: relative;
-        }
-        .loading-circle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(20px);
-            animation: dance 1.5s infinite alternate;
-        }
-        .loading-circle1 {
-            width: 8rem;
-            height: 8rem;
-            background-color: var(--accent-color);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: 0s;
-        }
-        .loading-circle2 {
-            width: 5rem;
-            height: 5rem;
-            background-color: var(--secondary-color);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: 0.5s;
-        }
-        @keyframes dance {
-            from {
-                transform: scale(1) translate(-50%, -50%);
-            }
-            to {
-                transform: scale(1.5) translate(-50%, -45%);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="loading-screen">
@@ -232,9 +15,9 @@
     </div>
 
     <header>
-        <nav>
+        <nav class="container">
             <div class="logo">
-                <span class="web">Web</span><span class="inova">Inova</span>
+                <span class="web">Rubethyst</span><span class="inova">Lab.</span>
             </div>
             <div class="nav-links">
                 <a href="#home">Home</a>
@@ -249,15 +32,16 @@
             <div class="blob blob1"></div>
             <div class="blob blob2"></div>
             <div class="hero-content">
-                <div class="text" id="animated-text"></div>
-                <p>Transforme sua presença online com designs únicos e impactantes</p>
-                <a href="#contact" class="cta-button">Encomende seu site</a>
+                <div id="animated-text-container">
+                </div>
+                <!-- <p id="hero-subtitle">Transforme sua presença online com designs únicos e impactantes</p> -->
+                <a href="#contact" class="cta-button hero-cta-button" id="hero-animated-cta" style="opacity: 0; transform: translateY(20px);">quero investir na minha empresa</a>
             </div>
         </section>
 
         <section id="services" class="container">
             <h2>Nossos Serviços</h2>
-            <div class="services">
+            <div class="services-grid">
                 <div class="service-card">
                     <h3>Web Design</h3>
                     <p>Criamos sites responsivos e modernos que capturam a essência da sua marca.</p>
@@ -275,105 +59,13 @@
     </main>
 
     <footer id="contact" class="parallax">
-        <h2>Entre em Contato</h2>
-        <p>Estamos prontos para transformar sua visão em realidade digital.</p>
-        <a href="mailto:contato@webinova.com" class="cta-button">Contate-nos</a>
+        <div class="container">
+            <h2>Entre em Contato</h2>
+            <p>Estamos prontos para transformar sua visão em realidade digital.</p>
+            <a href="mailto:contato@webinova.com" class="cta-button">Contate-nos</a>
+        </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loadingScreen = document.querySelector('.loading-screen');
-            const heroContent = document.querySelector('.hero-content');
-            const textElement = document.getElementById('animated-text');
-            const blobs = document.querySelectorAll('.blob');
-            const navLinks = document.querySelectorAll('.nav-links a');
-
-            const typeText = async (element, text, delay = 100) => {
-                for (let i = 0; i < text.length; i++) {
-                    element.innerHTML += text[i];
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
-            };
-
-            const deleteText = async (element, delay = 50) => {
-                while (element.innerHTML.length > 0) {
-                    element.innerHTML = element.innerHTML.slice(0, -1);
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
-            };
-
-            const animateText = async () => {
-                const logoText = 'WebInova';
-                const fullText = 'Design Web que Inova';
-
-                await typeText(textElement, logoText, 150);
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                await deleteText(textElement, 100);
-                await new Promise(resolve => setTimeout(resolve, 500));
-                textElement.innerHTML = '';
-                await typeText(textElement, fullText, 100);
-
-                // Add color transition
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                textElement.innerHTML = fullText.replace('Web', '<span class="highlight-web">Web</span>').replace('Inova', '<span class="highlight-inova">Inova</span>');
-                
-                setTimeout(() => {
-                    document.querySelector('.highlight-web').style.color = 'var(--secondary-color)';
-                    document.querySelector('.highlight-inova').style.color = 'var(--accent-color)';
-                }, 100);
-            };
-
-            setTimeout(() => {
-                loadingScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    heroContent.style.opacity = '1';
-                    heroContent.style.filter = 'blur(0)';
-                    blobs.forEach(blob => {
-                        blob.style.opacity = '0.7';
-                    });
-                    animateText();
-                }, 500);
-            }, 2000);
-            
-            // Smooth scrolling for navigation links
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    const headerOffset = 80; // Adjust this value based on your header height
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                });
-            });
-
-            // Blob animation
-            const moveBlob = (blob, deltaX, deltaY, duration) => {
-                const startX = parseFloat(blob.style.left || 0);
-                const startY = parseFloat(blob.style.top || 0);
-                const endX = startX + deltaX;
-                const endY = startY + deltaY;
-
-                blob.animate([
-                    { transform: `translate(${startX}px, ${startY}px)` },
-                    { transform: `translate(${endX}px, ${endY}px)` }
-                ], {
-                    duration: duration,
-                    iterations: Infinity,
-                    direction: 'alternate',
-                    easing: 'ease-in-out'
-                });
-            };
-
-            moveBlob(document.querySelector('.blob1'), 100, 100, 5000);
-            moveBlob(document.querySelector('.blob2'), -100, -100, 6000);
-        });
-    </script>
+    <script type="module" src="js/main.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,22 @@
+.cta-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    padding: 12px 28px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.cta-button:hover,
+.cta-button:focus {
+    background-color: var(--secondary-color);
+    transform: scale(1.05) translateY(-2px);
+    color: var(--text-color);
+    box-shadow: 0 5px 15px rgba(153, 102, 204, 0.4); /* Assuming Amethyst color for shadow */
+    outline: none;
+}

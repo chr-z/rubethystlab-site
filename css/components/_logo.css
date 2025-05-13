@@ -1,0 +1,14 @@
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    font-family: var(--font-primary);
+    letter-spacing: 0.5px;
+}
+
+.logo .web {
+    color: var(--secondary-color);
+}
+
+.logo .inova {
+    color: var(--accent-color);
+}

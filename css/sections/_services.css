@@ -1,0 +1,22 @@
+#services {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+#services h2 {
+    margin-bottom: 40px;
+}
+
+.services-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .services-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+}
